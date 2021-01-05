@@ -1,0 +1,793 @@
+"sudo cat /etc/os-release" : Voir la version du SE
+********************************************************
+"ssh username@ip" : connexion par ssh
+****************************************************************
+"sudo sh -c loadkeys fr" / "setxkbmap fr" : Mettre le clavier en français.
+
+
+"display-setup-script=/usr/bin/loadkeys fr oss"  dans "/etc/lightdm/lightdm.conf" precedé de "[SeatDefaults]"
+*********************************************************
+"useradd username --shell /bin/false" : Creer un user avec un shell non interractive
+******************************************************************
+https://kodekloud.com/ 
+
+https://devopssec.fr/article/creation-playbook-ansible-stack-lamp
+*******************************************************************
+"ssh-keygen -t rsa" : Generer une paire de cle SSH RSA
+"ssh-copy-id username@ip" : ajouter la public cle a la machine distante
+"ssh-keygen -R 192.168.1.124 "
+
+.ssh/au
+
+**********************************************************************
+"ansible dev,prod -m ping -u vagrant" : Lancer un ping de 2 groupe avec Ansible depuis Vagrant.
+**********************************************************************
+"#systemctl set-default graphical.target" : Graphic comme default
+"#yum –y groups install "GNOME desktop" : Installer l'interface graphic ARCH
+"#startx" : lancer l'interface Graphic
+"#apt-get install ubuntu-desktop " : Sous ubuntu
+************************************************************************
+		CREER UN SWAP d'echange
+Lien: https://doc.ubuntu-fr.org/swap
+************************************************************************
+scp image.png mateo21@85.123.10.201:/home/mateo21/images/ : Copie SCR vers Dest en ssh
+
+scp mateo21@85.123.10.201:image.png copie_image_sur_mon_pc.png : Copie Dest vers SRC en ssh
+
+http://winscp.net/eng/download.php  WINSCP pour les transfert avec windows.
+**********************************************************************************************
+
+ansible dev -m ping -u vagrant : pinguer un group avec Ansible
+
+ansible dev,prod -m ping -u vagrant : pinguer 2 group
+
+*******************************************************************************************
+			LIEN MISE A JOUR PYTHON
+https://mk57blog.wordpress.com/2017/01/28/comment-modifier-la-version-par-defaut-de-python-sur-debian/ 
+*************************************************************************************************
+			Linux String Substitute:
+
+sed -i -e "s/chaines1/chaine2/g" fichier  : Remplacer un mot par un autre.
+*************************************************************************************
+   "#nmap -PM ip@" : Scanner les ports disponiblent dans mon réseau 
+    ***************************************************************************************
+
+sudo iptables: voir si iptables est installation.
+http://www.delafond.org/traducmanfr/man/man8/iptables.8.html 
+*************************************************************************************
+iptables -P INPUT DROP : Fermer tous les port entrant
+
+iptables -t filter -A INPUT -p tcp --dport 22 -j ACCEPT
+
+http://blog.sephirots.fr/?p=123
+*********************************************************************************
+"sudo netstat --inet -npl" : Lister tous les ports sur un serveur
+
+********************************************************************
+			Executer un scripte au demarrage
+1 - /etc/init.d/ : le deplacer dans ce Repertoir			
+2 - "Enlever l'extension" Ex: "firewall.sh" en "firewall"
+3 - "Rendre le scripte executable par tous"; Ex: "chmod +x firewall"
+4 - "Rendre le scripte executable au demarrage"; "update-rc.d fichier defaults"
+*******************************************************************
+"find ou -name "nomfichier" " : chercher un doc
+**************************************************************
+http://centos.mirror.fr.planethoster.net/7.8.2003/isos/x86_64/ : Telecharger centos
+*********************************************************************
+			Lien sauvegarde Centos IPTABLES
+http://briicole-ton-linux.over-blog.com/2019/09/sauvegarde-et-restauration-des-regles-iptables-au-demarrage.html
+
+iptables-save > /etc/sysconfig/iptables
+ip6tables-save > /etc/sysconfig/ip6tables
+iptables-restore < /etc/sysconfig/iptables
+ip6tables-restore < /etc/sysconfig/iptables
+
+****************************************************************************************************
+ 			CONFIGURATION D'UN PARTAGE NFS
+ 			
+https://www.system-linux.eu/index.php?post/2009/03/27/Installation-et-configuration-d-un-serveur-nfs
+
+https://www.linuxtricks.fr/wiki/centos-7-installer-un-serveur-nfs-et-configurer-un-client-nfs
+
+
+yum install nfs-utils nfs-utils-lib -y
+systemctl start nfs
+systemctl enable --now rpcbind
+systemctl enable --now nfs
+vi /etc/exports
+/nfsshare  *(rw,no_root_squash,sync)
+exportfs -rv : Valider les modifications
+
+
+mount -t nfs 172.16.238.15:/nfsshare /var/www/web/ : Sur le serveur client
+mount -l : Verifier le montage
+
+
+
+ 
+ *********************************************************************************************** 
+ https://tecadmin.net/crontab-in-linux-with-20-examples-of-cron-schedule/
+ 
+ # yum install cronie : installation de cronie
+ # crontab -l : Verifier les crons
+ # crontab -e : Creer un crons
+ # crontab -u <nom d'utilisateur> -l : Affichzr les cron pour un user
+ crontab -u username -e : Creer un cron pour un user specifique
+ # service crond start : demarrer le service cron
+ # service crond stop
+ # service crond restart : Redemarrer le service Cron
+ 
+ systemctl status crond
+ ***************************************************************************************
+ host -t a www.siteduzero.fr 8.8.8.8 : Trouvez l'@ ip du "siteduzero" a partir du DNS google
+
+ 
+ *******************************************************************************************
+ 
+ netstat -paunt
+-a : Tous les ports
+-t : Tous les ports TCP
+-u : Tous les ports UDP
+-l : Tous les ports en écoute
+-n : Affiche directement les IP. Pas de résolution de nom.
+-p : Affiche le nom du programme et le PID associé.
+
+"kill -9 PID" : tuer un processus.
+ 
+  ************************************************************************************************   
+# netstat -atnp | grep httpd : lister les ports httpd
+# sudo systemctl enable httpd.service
+# sudo systemctl enable httpd
+# sudo chkconfig httpd on
+sudo service httpd reload
+# sudo service httpd restart
+ sudo systemctl -l status httpd.service : Voir le status du service apache
+ sudo vi /etc/httpd/conf/httpd.conf: fichier de configuration apache
+ sudo httpd -t : Verifier la configuration
+ ":set nu" Pour afficher les lignes
+ 
+ #ls -ldZ /var/www/html
+
+***********************************************************************************
+		CONFIGURATION DNS SERVER
+/etc/hosts
+/etc/resolv.conf
+/etc/named.conf
+
+https://linux-note.com/centos-7-serveur-dns-local/
+*****************************************************************************************
+"useradd -e 2016-11-30 test01" : Creer un user avec un compte expirant
+
+https://www.it-connect.fr/gerer-une-expiration-automatique-des-comptes-sous-linux/
+********************************************************************************************
+		DEPOT ORACLE
+
+http://www.kaysariqbal.com/install-oracle-11g-in-centos-linux-7/  : ORACLE11g
+*********************************************************************************
+
+cd /etc/yum.repos
+vi localyum.repo
+[localyum]
+name=localyum
+baseurl=file:///packages/downloaded_rpms/
+enabled=1
+gpgcheck=0
+
+createrepo -v /packages/downloaded_rpms/
+yum clean all
+yum list all
+Yum repolist all
+
+https://www.youtube.com/watch?v=_04PweRj-iM
+*****************************************************************************************
+Erreur: publickey, gssapi-keyex, gssapi-with-mic
+
+Rép: accès root à vi / etc / ssh / sshd_config et changez PasswordAuthentication (no) en yes.
+F
+2. Redémarrez les services sshd
+
+root> systemctl restart sshd.service
+********************************************************************************************
+			Linux find commande
+
+find /var/www/html/official -iname "*.php" -exec cp --parents {} /official/ \; : faire une recherche et copier la sortir.
+***********************************************************************************************
+		Enlever une signature sur apache
+
+https://www.tecmint.com/hide-apache-web-server-version-information/
+
+https://skrinhitam.wordpress.com/2014/11/22/disable-directory-listing-in-apache-on-rhelcentos-server/
+***********************************************************************************************
+			Désactivez la liste du navigateur de répertoire dans la configuration Apache
+			
+https://skrinhitam.wordpress.com/2014/11/22/disable-directory-listing-in-apache-on-rhelcentos-server/
+*****************************************************************************************************
+
+				Message de Bienvenue Banner
+Copier le fichier de message dans  "/etc/ssh/"
+Remplacer la ligne "Banner none" en "Banner /etc/ssh/" le fichier "/etc/ssh/sshd_conf"
+Recharger le service ssh "service sshd reload"
+
+				
+https://memo-linux.com/comment-personnaliser-le-message-de-bienvenue-dopenssh/
+****************************************************************************************************
+"cat /etc/passwd" : Lister tous les utilisateurs
+
+sudo useradd username --uid 1010 --home /home/acteur/ : Creer un user avec son UID et son Repertoire perso
+**************************************************************************************************************
+					DOSSIER PROTEGE SUR APACHE
+
+https://devops.ionos.com/tutorials/set-up-basic-authentication-in-apache-using-htaccess-on-centos-7/
+********************************************************************************************************************
+				HAPROXY Configuration
+systemctl status haproxy.service
+haproxy -c -f /etc/haproxy/haproxy.cfg : Voir les erreures dans le fichier de configuration
+
+
+https://upcloud.com/community/tutorials/haproxy-load-balancer-centos/
+
+https://www.howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7/
+
+
+
+*******************************************************************************************************************
+curl -L -O site_web: Pour telecharger depuis un site web.
+
+
+******************************************************************************************************************
+			Installation de Packages et le Fixer un depot au demarrage
+			
+yum-config-manager --enable depot
+
+https://www.linuxtricks.fr/wiki/utilisation-de-yum
+
+************************************************************************************************************
+
+/etc/init.d/networking restart : redemarrer l'interface reseau linux
+
+
+sbin/ifdown eth0
+ /sbin/ifup eth0
+ 
+*************************************************************************************************
+			CONFIGURATION AUTHENTIFICATION PAM
+sudo yum install epel-release
+sudo yum repolist
+sudo yum --enablerepo=epel -y install mod_authnz_external pwauth
+vi /etc/httpd/conf.d/authnz_external.conf
+
+<Directory /var/www/html/protected>
+    AuthType Basic
+    AuthName "PAM Authentication"
+    AuthBasicProvider external
+    AuthExternal pwauth
+    require valid-user
+</Directory>
+
+
+sudo mkdir /var/www/html/protected
+
+Ensuite monter les fichiers dans le dossier
+
+
+https://www.server-world.info/en/note?os=CentOS_7&p=httpd&f=10
+
+
+sudo service httpd restart
+ sudo systemctl -l status httpd.service
+
+
+**************************************************************************************************************
+ 					Configuration 
+ 
+ https://library.nagios.com/training/selfpaced/topics/#tab-nagiosxi
+ ************************************************************************************************************
+				Configuration de l'interface graphique
+https://quick-tutoriel.com/installer-une-interface-graphique-sur-centos/
+*******************************************************************************************
+				CONFIGURATION SSH
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-centos-8-fr
+
+******************************************************************************************
+https://www.youtube.com/watch?v=qGfbuP5OTwg&list=PLlxQJeQRaKDRHS274EzYfoBUI1KLBZDk7
+***********************************************************************************
+https://c46e136a583f7e334124-ac22991740ab4ff17e21daf2ed577041.ssl.cf1.rackcdn.com/Certificate/ScrumFundamentalsCertified-KRABIYAOSIDOINESATURNIN-793999.pdf
+***************************************************************************
+tar zcvf fichier.tar.gz fichier : Permet de creer un fichier compressé
+
+tar zxvf fichier.tar.gz : Permet l'extraction du fichier compressé
+****************************************************************************
+			Desactiver le mot de pass ROOT
+
+https://www.ionos.fr/assistance/serveurs-et-cloud/premiers-pas/informations-importantes-sur-la-securite-de-votre-serveur/desactiver-la-connexion-root-ssh/
+
+********************************************************************************************
+			CONFIGURATION DE SELINUX
+sestatus			
+sudo setenforce 0 : Desactivation temporaire
+sudo vi /etc/sysconfig/selinux : fichier de configuration: enabled, disabled.
+
+https://www.codeflow.site/fr/article/an-introduction-to-selinux-on-centos-7-part-1-basic-concepts : Pour les paquets
+
+https://linuxize.com/post/how-to-disable-selinux-on-centos-7/
+**********************************************************************************************
+
+		CREER UN USER SANS SON HOME / WITHOUT HOME
+
+useradd -M username: Créé le user sans home
+		
+https://maniacgeek.net/linux/la-commande-useradd-ou-adduser-dans-linux/#:~:text=Ajouter%20un%20utilisateur%20sous%20Linux%20sans%20le%20r%C3%A9pertoire%20Home,-Dans%20certains%20cas&text=Et%20si%20l'utilisateur%20utilise,utilisez%20l'option%20%2DM.
+*************************************************************************************
+		CONFIGURATION DE REVERSE POXY NGINX APACHE
+https://www.hugeserver.com/kb/configure-nginx-reverse-proxy-apache-centos/
+
+nginx -t : Verification du fichier de configuration
+vi /etc/nginx/nginx.conf : Fichier de configuration NGINX
+systemctl reload nginx
+systemctl status httpd
+systemctl status nginx
+
+
+*********************************************************************************************
+			CONFIGURATION RESEAU SUR WINDOWS
+ipconfig /release : Libérer toutes les connexions
+ipconfig /renew : Pour renouveller l'@ IP avec un server DHCP
+
+********************************************************************************************
+			LORSQU'UN PAQUET EST CASÉ
+sudo apt --fix-broken install 
+***************************************************************************************************
+			ENREGISTRER UN FICHIER A EXECUTER EN BASH
+			
+			
+https://linuxconfig.org/bash-scripting-tutorial			
+"fichier.bat" : Sous windows
+https://www.it-swarm.dev/fr/linux/comment-creer-un-fichier-zip-en-utilisant-le-script-shell/1048791636/
+
+vi /scripts/ecommerce_backup.sh
+
+#!/bin/bash
+
+zip -r /backup/xfusioncorp_news.zip /var/www/html/news/ 
+scp -r /backup/xfusioncorp_news.zip clint@172.16.238.16:/backup/
+****************************************************************************************************
+			CONFIGURATION DE FIREWALLD
+systemctl stop iptables
+systemctl disable iptables
+systemctl mask iptables
+systemctl mask ip6tables
+yum install firewalld -y
+systemctl start firewalld
+systemctl enable firewalld
+firewall-cmd --set-default-zone=public
+vi /etc/nginx/nginx.conf : voir le port nginx
+vi /etc/httpd/conf/httpd.conf : voir le port apache
+firewall-cmd --zone=public --permanent --add-port=8092/tcp
+firewall-cmd --zone=public --permanent --add-port=8092/udp
+firewall-cmd --permanent --zone=public --add-rich-rule=' rule family="ipv4" source address="172.16.238.14" port protocol="tcp" port="3000" accept'
+firewall-cmd --permanent --zone=public --add-rich-rule=' rule family="ipv4" source address="172.16.238.14" port protocol="udp" port="3000" accept'
+firewall-cmd --reload
+firewall-cmd --list-all
+
+service httpd restart
+service nginx restart
+
+
+
+
+
+firewall-cmd --zone=public --permanent --remove-service=https
+firewall-cmd --zone=public --permanent --remove-port=5000/udp
+			
+
+https://timetotech.fr/linux/tuto-configuration-dun-firewall-linux/
+
+****************************************************************************************************
+			CERTIFICATION FORTINET
+NSE1			
+CIO = DSI
+CISO = RSSI
+CFO = Directeur Financier
+
+NSE
+SOAR = Security Orchestration Automation and Response
+
+https://www.isleyen.net/fortinet-nse-1-lesson4-cfo-perspectives-quiz/
+https://training.fortinet.com/course/view.php?id=5844
+********************************************************************************************************
+			CONFIGURATION DE POSTGRESQL
+https://www.codeflow.site/fr/article/how-to-install-and-use-postgresql-on-centos-7 
+https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e
+https://www.postgresql.org/docs/9.1/auth-pg-hba-conf.html
+
+
+*********************************************************************************************************
+			CONFIGURATION DE SFTP
+			
+sftp username@ip : Se conncter en SFTP
+systemctl restart sshd : Redemarrer le service SSh
+
+			
+https://medium.com/@kbellioum/configuration-du-serveur-sftp-sur-centos-7-108911a78a6b
+			
+*************************************************************************************************
+			DORAMTION EAZYTRAINING
+https://eazytraining.fr/cours/defis-devops-gagnez-un-job-et-2000-eur/?tab=tab-overview
+
+***************************************************************************************************
+			CONNAITRE SA RESOLUTION D'ECRAN 
+			
+xrandr -q | grep \*
+
+******************************************************************************************************
+			CONFIGURATION DE WINE
+winecfg : lancer wine
+
+
+****************************************************************************************************
+			CONFIGURATION DE MARIADB
+
+# create Repository
+vi /etc/yum.repos.d/MariaDB.repo
+
+# MariaDB 10.3 CentOS repository list - created 2018-05-25 19:02 UTC
+# https://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.3/centos7-amd64/
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+
+yum install MariaDB-server MariaDB-client
+
+
+
+scp -r /home/thor/db.sql peter@172.16.239.10:/home/peter/
+
+
+# start service
+systemctl enable mariadb
+systemctl start mariadb
+
+# check status
+systemctl status mariadb
+
+# run secure
+mysql_secure_installation
+
+
+
+#connect to database
+mysql -u root -p
+
+mysql -u kodekloud_aim -p -h 172.16.239.10
+
+
+GRANT ALL PRIVILEGES ON *.* TO 's'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON kodekloud_db5.* TO 'kodekloud_aim'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+FLUSH HOSTS;
+
+
+mysql -u root -p userform < baseform.sql
+			
+			
+
+*****************************************************************************************************
+http://monip.org/ : Voir mon ip public
+*****************************************************************************************************
+			CONFIGURATION DE TOMCAT SERVER
+yum install tomcat tomcat-webapps tomcat-admin-webapps -y
+
+vi /etc/tomcat/server.xml : Configurer le port
+vi /etc/tomcat/tomcat-users.xml : gerer l'utilisateur
+
+<tomcat-users>
+    <user username="admin" password="password" roles="manager-gui,admin-gui"/>
+    <user username="user" password="password" roles="manager"/>
+</tomcat-users>
+systemctl start tomcat
+systemctl restart tomcat
+systemctl enable tomcat
+
+cp ROOT.war /usr/share/tomcat/webapp : Dans le document par defaut de TOMCAT
+********************************************************************************************************
+			ACCES SCRUM
+Username: y.krabi@afdb.org
+Password: VM5SI64AXC
+
+******************************************************************************************************
+				INSTALLATION DE DOCKER
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
+sudo apt update
+sudo apt install docker-ce
+
+
+https://www.julienmousqueton.fr/installer-docker-et-docker-compose-sous-centos-7-redhat-7/
+
+
+
+
+https://hub.docker.com/ : Docker HUB pour avoir les images
+
+https://devopssec.fr/article/deployer-manipuler-securiser-un-serveur-registry-docker-prive
+
+
+
+https://devopssec.fr/article/gerer-manipuler-pods-kubernetes
+*******************************************************************************************************
+			CISCO ANNYCONNECT
+https://vpn.nic.in/
+apt install libpangox-1.0-0
+
+
+*****************************************************************************************************************
+				SETUP SSL FOR NGINX
+vi /etc/nginx/conf.d/ssl.conf
+server {
+    listen 443 http2 ssl;
+    listen [::]:443 http2 ssl;
+
+    server_name 172.16.238.11;
+
+    ssl_certificate /etc/ssl/certs/nautilus.crt;
+    ssl_certificate_key /etc/ssl/certs/nautilus.key;
+}
+Effacement du mot de passe du BIOS
+￼
+￼
+Français
+
+
+*********************************************************************************************************************
+				PROCESSUS
+				
+"ps aux" : Voir tous les processus qui tournent sur la machine
+
+
+*******************************************************************************************************
+					HOSTNAME SETTING
+
+systemctl set-hostname puppet					
+***************************************************************************************************
+				Docker Volumes Mapping
+docker pull httpd:latest
+
+docker run -ti --name=media -d -v /opt/dba:/usr/src/ ubuntu:latest
+
+docker exec -ti monServeurWeb /bin/bash : Se connecter à un contener
+**********************************************************************************************
+			K8S CRONJOB
+kubectl create -f <template.yaml>
+
+kubectl get cronjob cronname : voir les cron plannifiés
+
+kubectl delete cronjob cronjob-name : Supprimer un cron
+
+kubectl describe cronjob cronjob-name : Inspecter une tache cron.
+
+
+
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: xfusion
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cron-xfusion
+            image: httpd:latest
+            args:
+            - /bin/sh
+            - -c
+            - echo Welcome to xfusioncorp
+          restartPolicy: OnFailure
+
+
+
+************************************************************************************************
+                   Troubleshoot Deployment issues in Kubernetes
+
+# Créer un Deployment
+kubectl create -f <template.yaml>
+
+
+# Appliquer des nouveaux changements à votre Deployment sans le détruire
+kubectl apply -f <template.yaml>
+
+
+# Modifier et appliquer les changements de votre Deployment instantanément sans le détruire
+kubectl edit deployment <DEPLOYMENT NAME>
+
+
+# Afficher les détails d'un Deployment
+kubectl describe deployment <DEPLOYMENT NAME>
+
+kubectl get deployment -o wide
+
+
+# Mettre à jour l'image des Pods de votre Deployment
+kubectl set image deployment/<DEPLOYMENT NAME> <CONTAINER NAME>=<NEW IMAGE NAME>
+
+
+
+# Afficher l'historique des révisions de votre Deployment
+kubectl rollout history deployment/<DEPLOYMENT NAME>
+
+
+
+# Revenir à une version précédente
+kubectl rollout undo deployment/nginx-deployment --to-revision=<REVISION NUMBER>
+
+
+
+**************************************************************************************
+
+https://devopssec.fr/article/commandes-de-reseau-linux
+
+
+******************************************************************************************
+### écouter le port http (80) sur l'interface ens3 et voir le contenu du
+tcpdump -A -i ens3 port http
+
+### Affiche tous les paquets en provenance de 192.168.1.2 vers 192.168.1.3 sur le port 22 en tcp.
+tcpdump src host 192.168.1.2 and dst host 192.168.1.3 and port 22 and tcp
+
+### stocker la capture dans le fichier capture.tdp
+tcpdump -w capture.tdp
+
+### lire la capture dans le fichier capture.tdp
+tcpdump -v -r capture.tdp
+
+
+********************************************************************************************
+
+
+
+			SCHEDULING DANS KUBERNETES
+# Assigner un label à un nœud
+kubectl label node <NODE NAME> <key>=<value>
+
+# Supprimer un label d'un un nœud (rajouter le signe "-" à la fin)
+kubectl label node <NODE NAME> <key>-
+
+# Afficher les labels d'un nœud 
+kubectl get nodes <NODE NAME> --show-labels
+
+# Créer une Taint
+kubectl taint nodes <NODE NAME> key=value:<taint-effect>
+    Valeurs possibles de <taint-effect> : 
+      - NoSchedule
+      - PreferNoSchedule
+      - NoExecute
+
+# Récupérer la liste des Taints disponibles dans notre cluster
+kubectl describe node [En option <NODE NAME>] | grep 'Name:\|Taints:'
+
+# Supprimer une Taint à un nœud (rajouter le signe moins "-" à la fin)
+kubectl taint nodes <NODE NAME> key=value:<taint-effect>-
+
+
+
+
+
+
+*********************************************************************************************
+   			INSTALL PUPPETSERVER
+rpm -ivh https://yum.puppetlabs.com/el/7/products/x86_64/puppetlabs-release-7-11.noarch.rpm
+
+https://puppet.com/docs/puppet/6.19/server/install_from_packages.html#:~:text=To%20change%20the%20Puppet%20Server,edit%20the%20init%20config%20file.&text=Replace%202g%20with%20the%20amount,%22%2DXms512m%20%2DXmx512m%22%20.
+***************************************************************************************
+			NAGIOS INSTALLATION FAILED
+
+https://www.youtube.com/watch?v=Tigfw7dZE6E
+
+
+
+***************************************************************************************
+			Fix Issue with VolumeMounts in Kubernetes
+
+kubectl edite POD nginx-phpfpm : Pour modifier le volume du POD
+kubectl delete pod nginx-phpfpm : Supprimer l'ancien POD
+kubectl apply -f /tmp/kubectl-edit-3hddr.yaml : Appliquer les modifications
+kubectl exec nginx-phpfpm -ti -c nginx-container /bin/bash
+
+
+*************************************************************************************************
+		KUBERNETES COPIE
+https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp
+
+******************************************************************************************
+
+
+ssh natasha@172.16.238.15  PW: Bl@kW
+ssh peter@172.16.239.10
+scp /home/thor/ natasha@172.16.238.15:/data
+
+scp -r /home/thor/blog/ natasha@172.16.238.15:/data
+
+ssh tony@172.16.238.10     PW: Ir0nM@n
+ssh steve@172.16.238.11     PW: Am3ric@
+ssh banner@172.16.238.12     PW: BigGr33n
+ssh clint@172.16.238.16	PW : H@wk3y3
+ssh peter@172.16.239.10	PW: Sp!dy
+ssh clint@172.16.238.16 	PW: H@wk3y3	
+ssh loki@172.16.238.14        PW: Mischi3f
+
+
+
+
+ssh-keygen -t rsa
+ssh-copy-id tony@172.16.238.10
+ssh-copy-id steve@172.16.238.11
+ssh-copy-id banner@172.16.238.12
+ssh-copy-id peter@172.16.239.10
+ 	
+telnet 172.16.238.10 80	PW: H@wk3y3
+
+
+
+
+http://www.men-deco.org/c/ouverture-des-inscriptions-en-ligne-des-examens-et-concours-pedagogiques/
+
+
+
+https://github.com/ksidoine08?tab=repositories
+
+
+https://console.aws.amazon.com/iam/home#/users
+
+
+
+**************************************************************************************
+
+
+
+
+http://ip10-0-0-3-bvn31il6avu08v7ifq5g-10080.direct.docker.labs.eazytraining.fr/admin/users/new
+
+
+
+https://app.slack.com/client/TM1K9GEB0/C0195T27TE3/details/top
+
+
+**********************************************************************************************
+				GIT MANIPULATION
+
+git init
+git add .
+git commit -m "Commit message"
+git remote add origin https://github.com/repository
+git push origin mastter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
