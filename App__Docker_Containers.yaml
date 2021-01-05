@@ -1,0 +1,33 @@
+
+version: '3.3'
+
+services:
+    DB:
+        image: mariadb:latest
+        container_name: mysql_apache
+        restart: always
+        volumes:
+            - /var/lib/mysql:/var/lib/mysql
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: MaxAriel@1618
+            MYSQL_DATABASE: database_apache
+            MYSQL_USER: MaxAriel
+            MYSQL_PASSWORD: MaxAriel@1618
+
+    web:
+        image: php:7.3-apache-stretch
+        container_name: php_apache
+        restart: always
+        volumes:
+            - /var/www/html:/var/www/html
+        ports:
+            - 6200:80
+        depends_on:
+            - DB
+
+
+
+
+  Docker container ls / Docker ps: Voir les container 

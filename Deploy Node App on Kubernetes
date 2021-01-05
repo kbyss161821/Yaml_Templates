@@ -1,0 +1,48 @@
+kubectl create namespace node-namespace-xfusion
+
+
+
+
+
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-service-xfusion
+  namespace: node-namespace-xfusion
+spec:
+  type: NodePort
+  selector:
+    app: tomcat
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30012
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment-xfusion
+  namespace: node-namespace-xfusion
+  labels:
+    app: tomcat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - name: node-container-xfusion
+        image: gcr.io/kodekloud/centos-ssh-enabled:node
+        ports:
+        - containerPort: 80
+ 
+        
+        
+      
