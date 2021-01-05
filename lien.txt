@@ -1,0 +1,116 @@
+Ceci le lien pour PRTG pour monitorer les liens MPLS et Internet,
+https://192.168.225.240
+username : AFDBPRTGMON
+password : Afdb123+
+
+INTERNET MOZAMBIQUE
+
+Internet is  unavailable in MOZAMBIQUE office     INC0051734
+
+
+VSAT LINK: https://10.50.10.25:10001                              
+ID:AFDBHQ
+PW:Vs@1Abidjan
+TCHAD ALL SERVICES
+TCHAD all services are unavailable
+
+Prime Infrastructure:192.168.232.28
+User: afdbmont
+MP: Monitor@123
+
+04
+
+
+
++ 225 21770036 + 225 78789678
+
+
+
+gacoulibaly@cfao.com
+
+
+
+ISE LINK:192.168.232.25
+ID:mntadmin
+PW:Abidjan@123#
+**************************************************************
+NAGIOS:192.168.220.148
+192.168.220.148/nagvis
+User: nagiosadmin
+MP:  B@DM0NS&c2017*
+
+TEST de DEBIT
+https://fast.com/fr/
+***************************************************************
+
+Notification SMS
+User:admin              
+@: 192.168.170.178
+MP: UCFb2016*
+
+***********************************************************
+Unisphere Recovery Point (EMC) 
+(https://192.168.223.25)
+Login            : ITOC_MON
+Password     :     I123+123  
+************************************************************
+VMware vCenter
+192.168.220.150
+Login            :  ITOC_MON
+Password         :  I123+123
+**************************************************************
+
+DCIM_ITOC
+IP : 192.168.220.233
+Login : ITOC
+Password :DCIMITOC$ 
+***********************************************************
+
+Lien parametre de config outlook
+
+https://www.commentcamarche.com/faq/893-parametres-de-serveurs-pop-imap-et-smtp-des-principaux-fai#gmail
+***********************************************************
+http://www.gum-gum-stream.co/angel-beats-vostfr/ <http://www.gum-gum-stream.co/angel-beats-vostfr/>  
+**********************************************************
+
+\\dje360073-1
+************************************
+http://kb.itoc.lan:8080/
+*********************
+
+https://cortex.orange.ci/main.php?p=4
+       cortexbad
+Lien VSAT 
+-              Lien : https://10.50.10.25:10001
+-              Login: AFDBHQ
+-              Pass: Vs@1Abidjan
+
+
+
+
+
+      https://teams.microsoft.com/_?tenantId=727339d1-16ec-43cb-b6c3-5001fec5e907#/files/unknown?threadId=19:ba1bb8f1e1d6463f935b80189c0930a5@thread.skype&ctx=channel
+
+
+
+https://afdbdev.service-now.com/nav_to.do?uri=%2Fpa_indicators.do%3Fsys_id%3D-1%26sys_is_list%3Dtrue%26sys_target%3Dpa_indicators%26sysparm_checked_items%3D%26sysparm_fixed_query%3D%26sysparm_group_sort%3D%26sysparm_list_css%3D%26sysparm_query%3Dtype%3D1%26sysparm_referring_url%3Dpa_indicators_list.do%3Fsysparm_query%3Dtype%253D1%255EEQ@99@sysparm_view%3DAutomated%26sysparm_target%3D%26sysparm_view%3DAutomated
+
+
+*********************************************************************************************************
+https://monitor.mimecast.com/ReadOnlyDashboard?id=9a112dbe-a101-4582-9d7d-3c741eaf17e9
+
+
+
+*******************************************************
+l0g+0fz0cX
+**************************************************
+
+
+                    Username:     emc
+                    Password:      1Sat2link3
+
+
+**************************************
+}TF]k}/54&
+
+

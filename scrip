@@ -1,0 +1,3 @@
+#!/bin/bash
+zip -r /backup/xfusioncorp_ecommerce.zip /var/www/html/ecommerce
+scp -r /backup/xfusioncorp_ecommerce.zip clint@172.16.238.16:/backup/

@@ -1,0 +1,22 @@
+
+
+version: '3.3'
+
+services:
+    web:
+        image: httpd:latest
+        container_name: httpd
+        restart: always
+        volumes:
+            - /opt/itadmin:/usr/local/apache2/htdocs
+        ports:
+            - 6400:80
+
+
+
+
+sudo docker-compose up -d
+
+
+
+docker exec -it container_id /bin/sh
