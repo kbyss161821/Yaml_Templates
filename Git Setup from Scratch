@@ -1,0 +1,18 @@
+
+yum install git
+
+git --version
+
+git config --global user.name "natasha"
+git config --global user.email "natasha@example.com"
+
+git config --list
+
+
+git init --bare --shared=group path/demo.git
+
+git clone /opt/media.git /usr/src/kodekloudrepos/demo
+
+git checkout -b branchname
+
+git push origin branche_name
