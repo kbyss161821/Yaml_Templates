@@ -1,0 +1,33 @@
+
+
+---
+
+- hosts: stapp01
+  become: yes
+  tasks:
+     - name: Ansible replace string
+       replace:
+         path: /opt/itadmin/blog.txt 
+         regexp: 'xFusionCorp'
+         replace: 'Nautilus'
+         backup: yes
+
+- hosts: stapp02
+  become: yes
+  tasks:
+     - name: Ansible replace string
+       replace:
+         path: /opt/itadmin/story.txt 
+         regexp: 'Nautilus'
+         replace: 'KodeKloud'
+         backup: yes
+
+- hosts: stapp03
+  become: yes
+  tasks:
+     - name: Ansible replace string
+       replace:
+         path: /opt/itadmin/media.txt 
+         regexp: 'KodeKloud'
+         replace: 'xFusionCorp Industries'
+         backup: yes

@@ -1,0 +1,39 @@
+
+---
+
+- hosts: stapp01
+  become: yes
+  tasks:
+  
+     - name: Ansible archive 1
+       archive:
+         path: /usr/src/finance/
+         dest: /opt/finance/apps.tar.gz
+         owner: tony
+         group: tony
+         format: gz
+         force_archive: true
+
+- hosts: stapp02
+  become: yes
+  tasks:
+     - name: Ansible archive 2
+       archive:
+         path: /usr/src/finance/
+         dest: /opt/finance/apps.tar.gz
+         owner: steve
+         group: steve
+         format: gz
+         force_archive: true
+
+- hosts: stapp03
+  become: yes
+  tasks:
+     - name: Ansible archive 3
+       archive:
+         path: /usr/src/finance/
+         dest: /opt/finance/apps.tar.gz
+         owner: banner
+         group: banner
+         format: gz
+         force_archive: true

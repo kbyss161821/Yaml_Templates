@@ -1,0 +1,33 @@
+
+---
+
+- hosts: all
+  become: true
+ 
+  tasks:
+  - name: Install the latest version of Apache
+    yum:
+      name: httpd
+      state: latest
+
+  - name: Give writable mode to http folder
+    file:
+      path: /var/www/html/index.html
+      state: touch
+      owner: apache
+      group: apache
+      mode: '0777'
+      
+  - name: blockinfile module
+    blockinfile:
+      path: /var/www/html/index.html
+      block: |
+        Welcome to XfusionCorp!
+        This is Nautilus sample file, created using Ansible!
+        Please do not modify this file manually!
+  
+  - name: ensure apache service is start
+    service:
+      name: httpd
+      state: started
+      enabled: yes

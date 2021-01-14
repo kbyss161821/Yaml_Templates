@@ -1,0 +1,10 @@
+
+
+Run the following command to create a new swarm:
+
+$ docker swarm init --advertise-addr <MANAGER-IP>
+
+
+Run the following command to leave a new swarm:
+
+docker swarm leave --force
