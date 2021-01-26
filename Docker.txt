@@ -1,0 +1,60 @@
+docker ps -lq : Voir l'ID du dernier conteneur
+*******************************************************************************************************
+docker exec -it container_id bash / docker exec -it container_id /bin/sh : Se connecter à un conteneur.
+*******************************************************************************************************
+docker ps -a : Lister les conteneurs
+********************************************************************************************************
+## Supprimer tous les volumes locaux non inutilisés
+docker volume prune
+    -f ou --force : forcer la suppression
+*****************************************************************************************************************
+
+docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq) : Voir les IPs des conteneurs.
+
+********************************************************************************************************************
+
+docker-compose up : Pour lancer un un Playbook Docker.
+*******************************************************************************************************************
+## Créer un réseau docker
+docker network create --driver <DRIVER TYPE> <NETWORK NAME>
+
+# Lister les réseaux docker
+docker network ls
+
+## Supprimer un ou plusieurs réseau(x) docker
+docker network rm <NETWORK NAME>
+
+## Récolter des informations sur un réseau docker
+docker network inspect <NETWORK NAME>
+    -v ou --verbose : mode verbose pour un meilleur diagnostique
+
+## Supprimer tous les réseaux docker non inutilisés
+docker network prune
+    -f ou --force : forcer la suppression
+
+## Connecter un conteneur à un réseau docker
+docker network connect <NETWORK NAME> <CONTAINER NAME>
+
+## Déconnecter un conteneur à réseau docker
+docker network disconnect <NETWORK NAME> <CONTAINER NAME>
+    -f ou --force : forcer la déconnexion
+
+## Démarrer un conteneur et le connecter à un réseau docker
+docker run --network <NETWORK NAME> <IMAGE NAME>
+****************************************************************************************************************
+kubectl cluster-info : Voir les informations de K8S
+
+kubectl get nodes : Voir les noeuds
+
+
+minikube status
+
+
+minikube ssh : Connexion à une vm minikube
+
+
+
+minikube dashboard : Connexion au Dashboard d'une Vm minikube 
+
+minikube delete : Supprimer un Cluster
+****************************************************************************************************************

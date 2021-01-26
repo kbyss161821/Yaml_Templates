@@ -786,9 +786,44 @@ https://certiprof.com/pages/scrum-master-professional-certificate-smpc
 https://stackoverflow.com/questions/46525081/does-kubernetes-mount-an-emtpydir-volume-on-the-host
 
 *************************************************************************************
+			DOCKER CONTEXT
+1- Cest quoi le profile name dans la creation d'un ECS AWS? peut ton le substituer à l'ID AWS?
+
+2- Les comptes educate AWS pour les formations n'arrivent pas à creer un IAM administrator.
+3- Ya t'il la creation d'un secret dans la creation d'un compte educate? Comment le retrouver?
+4- Quelle est la difference entre "Docker set context..." et "Docker context create contextReferences"
+5- je n'arrive pas à supprimer un compte IAM cree à partir de mon compte educate
+
+
+
+Unified search service is unavailable
+Try your search again later.
+
+
+*************************************************************************************
 https://console.aws.amazon.com/billing/home?#/paymentmethods
+****************************************************************************************
+		VIRTUALBOX Problem
+		
+https://forum.ubuntu-fr.org/viewtopic.php?id=2060814
 
 
+echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
+wget https://www.virtualbox.org/download/oracle_vbox_2016.asc
+sudo apt-key add oracle_vbox_2016.asc
+sudo apt update
+sudo apt install virtualbox-6.1
+		
+		
+		
+**********************************************************************************
+
+https://github.com/diranetafen/student-list
+
+
+https://github.com/ksidoine08/student-list
+
+**********************************************************************************************
 
 
 ssh natasha@172.16.238.15  PW: Bl@kW
@@ -819,31 +854,38 @@ telnet 172.16.238.10 80	PW: H@wk3y3
 *********************************************************************************
 
 
-The Nautilus DevOps team is running a voting app on their old infrastructure that they want to migrate to the Kubernetes cluster. They have already prepared the requirements related to the application stack. As per details given below deploy the voting app on the Kubernetes cluster:
 
 
-Create a namespace which should be named vote.
+docker run -d --name kra -v /home/sidoine/Documents/Formations_Perso/Eazy_Training/Partie_1_Docker/Projet_Docker/student-list/simple_api/student_age.json:/data/student_age.json -p 3000:5000 kra:v1
 
-Create a service vote-service under the namespace you created. Port should be 5000, targetPort should be 80 and nodePort should be 31000. Service endpoint exposes deployment vote-deployment under namespace vote.
 
-Create a deployment vote-deployment under the namespace you created. Replicas count should be 1, the container name should be vote, use kodekloud/examplevotingapp_vote:before image ( use exact name of image as mentioned ) and containerPort should be 80.
+****************************************************************************************************
 
-Create a service redis under the same namespace. Port should be 6379, targetPort should be 6379, its type should be ClusterIP service endpoint exposes deployment redis-deployment under namespace vote.
+The Nautilus development team had a discussion with the DevOps team and they want to deploy a Jekyll app on Kubernetes cluster. They have already shared details with the DevOps team, please find more details below:
 
-Create a redis deployment redis-deployment under the same namespace. Replica count should be 1. The container name should be redis use redis:alpine image ( use exact name as mentioned ). Volume type should be EmptyDir, volumeName should be redis-data and its mountPath should be /data
 
-Create a deployment worker under the same namespace. Its replicas count should be 1. The container name should be worker, use kodekloud/examplevotingapp_worker image ( use exact name of image as mentioned ).
+Create a namespace jekyll-namespace-datacenter for jekyll.
 
-Create a service db under the same namespace. Port shold be 5432, targetPort should be 5432 and its type should be ClusterIP.
+PersistentVolume is already created on jump_host.
 
-Create a deployment db-deployment under the same namespace. Its replica count should be 1. The container name should be postgres, use postgres:9.4 image ( use exact name of image as mentioned ). Define ENV as first env name should be POSTGRES_USER and its value should be postgres, second env name should be POSTGRES_PASSWORD and its value should be postgres and third env name should be POSTGRES_HOST_AUTH_METHOD and its value should be trust. Volume type should be EmptyDir, volumeName should be db-data and its mountPath should be /var/lib/postgresql/data.
+Create a PersistentVolumeClaim which should be named jekyll-site-datacenter under the same namespace. accessModes should be ReadWriteMany, request 1Gi storage.
 
-Create a deployment for the result which should be named result-deployment under the same namespace. Configure spec as replica should be 1. The container name should be result, use image kodekloud/examplevotingapp_result:before ( use exact name of image as mentioned ) and the containerPort should be 80.
+Create a pod named jekyll-pod-datacenter for jekyll. Init container should be named as jekyll-init-datacenter, image should be kodekloud/jekyll, use command as [ "jekyll", "new", "/site" ]. Its image pull policy should be IfNotPresent, volumeMount name should be site and its mountPath should be /site. The main container should be named as jekyll-container-datacenter, its image should be kodekloud/jekyll-serve, volumeMount name should be site and its mountPath should be /site. Volume name should be site and persistent volume claim's claim name should be jekyll-site-datacenter
 
-Create a service for result which should be named as result-service under the same namespace. Configure spec as port should be 5001, targetPort should be 80 and nodePort should be 31001 and its type should be NodePort.
+Create a service for jekyll which should be named jekyll-service-datacenter under the same namespace. Port should be 8080, protocol should be TCP, its targetPort should be 4000 and nodePort should be 31181. Its type should be NodePort and loadbalancer status should be {}.
 
 You can use any labels as per your choice.
 
 Note: The kubectl on jump_host has been configured to work with the kubernetes cluster.
+
+******************************************************************************************
+
+
+
+
+
+
+
+
 
 

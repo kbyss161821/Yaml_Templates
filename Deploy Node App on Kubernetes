@@ -1,4 +1,4 @@
-kubectl create namespace node-namespace-xfusion
+kubectl create namespace node-namespace-devops
 
 
 
@@ -9,8 +9,8 @@ kubectl create namespace node-namespace-xfusion
 apiVersion: v1
 kind: Service
 metadata:
-  name: node-service-xfusion
-  namespace: node-namespace-xfusion
+  name: node-service-devops
+  namespace: node-namespace-devops
 spec:
   type: NodePort
   selector:
@@ -23,8 +23,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-deployment-xfusion
-  namespace: node-namespace-xfusion
+  name: node-deployment-devops
+  namespace: node-namespace-devops
   labels:
     app: tomcat
 spec:
@@ -38,7 +38,7 @@ spec:
         app: tomcat
     spec:
       containers:
-      - name: node-container-xfusion
+      - name: node-container-devops
         image: gcr.io/kodekloud/centos-ssh-enabled:node
         ports:
         - containerPort: 80

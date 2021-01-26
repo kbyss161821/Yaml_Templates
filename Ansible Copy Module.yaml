@@ -1,0 +1,13 @@
+
+
+
+
+---
+
+- hosts: all
+  become: yes
+  tasks:
+     - name: Copy file with owner and permissions
+       ansible.builtin.copy:
+         src: /usr/src/data/index.html
+         dest: /opt/data/index.html

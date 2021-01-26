@@ -1,0 +1,73 @@
+
+kubectl create namespace jekyll-namespace-devops
+
+
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+   name: jekyll-site-devops
+   namespace: jekyll-namespace-devops
+spec:
+   accessModes:
+     - ReadWriteMany
+   resources:
+     requests:
+       storage: 1Gi
+        
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name:  jekyll-pod-devops
+  namespace: jekyll-namespace-devops
+  labels: 
+    app: jekyll
+    role: devops
+spec:
+  initContainers:
+  - name: jekyll-init-devops
+    image: kodekloud/jekyll
+    command: ["jekyll", "new", "/site"]
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: site
+      mountPath: /site
+  containers:
+  - name: jekyll-container-devops
+    image: kodekloud/jekyll-serve
+    volumeMounts:
+    - name: site
+      mountPath: /site
+  volumes:
+  - name: site
+    persistentVolumeClaim:
+      claimName: jekyll-site-devops  
+                   
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jekyll-service-devops
+  namespace: jekyll-namespace-devops
+spec:
+  type: NodePort
+  selector:
+    app: jekyll
+    role: devops
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 4000
+    nodePort: 31181
+    name: jekyll
+status:
+  loadBalancer: {}
+
+
+
+kubectl get pods -n namespace_name
+
+
+
+  
