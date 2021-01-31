@@ -1,0 +1,48 @@
+
+
+
+---
+# WEB SERVER
+
+- hosts: stapp03
+  become: true
+
+  tasks:
+  - name: install apache and php last version
+    yum:
+      name:
+        - httpd
+        - php
+      state: present
+      update_cache: yes
+  - name: create document root
+    file:
+      path: /var/www/html/myroot
+      state: directory
+  - name: httpd Document root
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      state: present
+      regexp: '^DocumentRoot'
+      line: 'DocumentRoot /var/www/html/myroot'
+      create: yes
+  - name: Copy file
+    template:
+      src: ~/playbooks/templates/phpinfo.php.j2
+      dest: /var/www/html/myroot/phpinfo.php
+      owner: apache
+      group: apache    
+  - name: ensure apache service is start
+    service:
+      name: httpd
+      state: restarted
+      enabled: yes
+  - name: ensure apache service is start
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+      
+      
+      
+      

@@ -4,7 +4,7 @@ version: '3.3'
 services:
     DB:
         image: mariadb:latest
-        container_name: mysql_blog
+        container_name: mysql_host
         restart: always
         volumes:
             - /var/lib/mysql:/var/lib/mysql
@@ -12,20 +12,22 @@ services:
             - 3306:3306
         environment:
             MYSQL_ROOT_PASSWORD: MaxAriel@1618
-            MYSQL_DATABASE: database_blog
+            MYSQL_DATABASE: database_host
             MYSQL_USER: MaxAriel
             MYSQL_PASSWORD: MaxAriel@1618
 
     web:
-        image: php:latest
+        image: php:7.3.26-apache
         container_name: php_host
         restart: always
         volumes:
             - /var/www/html:/var/www/html
         ports:
-            - 6100:80
+            - 6300:80
         depends_on:
-            - db
+            - DB
 
-volumes:
-    db-volume:
+
+
+
+
