@@ -1,0 +1,27 @@
+FROM ubuntu
+
+RUN apt-get update
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get install -y apache2
+
+RUN sed -i 's/80/6200/g' /etc/apache2/ports.conf
+
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+
+
+
+
+
+version: '3.3'
+
+services:
+    web:
+        image: ubuntu:v1
+        container_name: apache
+        restart: always
+        volumes:
+            - /opt/docker:/var/www/html
+        ports:
+            - 6200:80

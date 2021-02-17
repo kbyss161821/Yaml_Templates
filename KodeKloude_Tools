@@ -755,14 +755,33 @@ https://app.slack.com/client/TM1K9GEB0/C0195T27TE3/details/top
 				GIT MANIPULATION
 
 git init
-git add .
-git commit -m "Commit message"
-git remote add origin https://github.com/repository
-git push origin mastter
+git add README.md
+git commit -m "first commit"
+git branch -M master
+git remote add origin https://github.com/ksidoine08/Mes-Livres.git
+git push -u origin main
 
 
 
 https://quizlet.com/fr/478724057/git-2-flash-cards/
+
+
+
+
+
+********************************************************************************************************
+			Install Puppet Agent	
+
+  yum install puppet
+ 
+    3  rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+    4  yum install puppet -y
+    5  systemctl start puppet
+    6  systemctl start puppet.service
+    7  systemctl enable puppet
+    8  systemctl enable puppet.service
+
+
 
 ************************************************************************************************
 
@@ -817,12 +836,13 @@ sudo apt install virtualbox-6.1
 		
 		
 **********************************************************************************
+https://www.awseducate.com/student/s/awssite
 
-https://github.com/diranetafen/student-list
+
+https://console.aws.amazon.com/billing/home?#/paymentmethods
 
 
-https://github.com/ksidoine08/student-list
-
+https://labs.vocareum.com/main/main.php?m=editor&nav=1&asnid=14334&stepid=14335
 **********************************************************************************************
 
 
@@ -852,13 +872,16 @@ ssh-copy-id peter@172.16.239.10
 telnet 172.16.238.10 80	PW: H@wk3y3
 
 *********************************************************************************
-
+https://www.composerize.com/
 
 
 
 docker run -d --name kra -v /home/sidoine/Documents/Formations_Perso/Eazy_Training/Partie_1_Docker/Projet_Docker/student-list/simple_api/student_age.json:/data/student_age.json -p 3000:5000 kra:v1
 
 
+
+
+olivier.moulengue@gmail.com
 ****************************************************************************************************
 
 
@@ -866,7 +889,25 @@ docker run -d --name kra -v /home/sidoine/Documents/Formations_Perso/Eazy_Traini
 docker run -d --name test-api --mount type=bind,source="$(pwd)"/student_age.json,target=/data/student_age.json -p 5000:5000 pozos-api:0.1
 
 docker-compose logs -f
+
+
+https://docker.labs.eazytraining.fr/
 *****************************************************************************************************
+
+
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.3/aio/deploy/recommended.yaml
+
+kubectl create serviceaccount dashboard-admin-sa
+kubectl create clusterrolebinding dashboard-admin-sa --clusterrole=cluster-admin --serviceaccount=default:dashboard-admin-sa
+kubectl get secrets
+kubectl describe secret dashboard-admin-sa-token-dvwl7
+kubectl proxy --address 0.0.0.0 --accept-hosts.*
+********************************************************************************************************************
+maxariel1618@gmail.com
+******************************************************************************************
+
 
 
 
