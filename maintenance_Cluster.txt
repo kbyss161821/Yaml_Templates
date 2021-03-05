@@ -1,0 +1,28 @@
+
+
+kubectl drain node01 --ignore-daemonsets: Deplacer tous les PODS sur le noeud
+
+kubectl cordon node01: desactiver le noeud
+
+kubectl uncordon node01: Activer le POD
+
+
+
+
+		UPGRADE
+MASTER
+kubeadn upgrade plan
+apt-get upgrade -y kubeadm=1.18.0-00
+apt install kubelet=1.18.0-00
+kubeadn upgrade apply v1.18.0-00
+apt install kubeadn
+
+systemctl restart kubelet
+
+
+apt-get upgrade kubelet
+
+
+WORKER
+
+kubeadm upgrade node01 config --kubelet-version v1.17.0: Depuis le noeud Master

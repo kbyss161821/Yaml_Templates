@@ -1,0 +1,29 @@
+spec:
+  containers:
+  - image: kodekloud/filebeat-configured
+    name: sidecar
+     volumeMounts:
+    - name: log-volume
+      mountPath: /var/log/event-simulator/
+  
+    volumes:
+  - name: log-volume
+    emptyDir: {} 
+
+
+
+initContainers:
+  - command:
+    - sh
+    - -c
+    - sleep 600
+    image: busybox:1.28
+    imagePullPolicy: IfNotPresent
+    name: warm-up-1
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-v4g6x
+      readOnly: true
