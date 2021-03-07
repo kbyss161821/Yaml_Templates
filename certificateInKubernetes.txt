@@ -1,0 +1,6 @@
+		
+
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text
+
+
+ETCD has its own CA. The right CA must be used for the ETCD-CA file in /etc/kubernetes/manifests/kube-apiserver.yaml. View answer at /var/answers/kube-apiserver.yaml
