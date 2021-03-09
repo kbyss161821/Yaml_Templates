@@ -10,7 +10,7 @@
   
      - name: Ansible unarchive
        unarchive:
-         src: /usr/src/finance/devops.zip
+         src: /usr/src/sysops/nautilus.zip
          dest: /opt/finance/
          owner: "{{ ansible_user }}"
          group: "{{ ansible_user }}"

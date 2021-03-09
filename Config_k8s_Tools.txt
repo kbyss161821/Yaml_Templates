@@ -1,0 +1,4 @@
+
+kubectl config view 
+
+kubectl config view --kubeconfig=my-kube-config: Voir une config specifique

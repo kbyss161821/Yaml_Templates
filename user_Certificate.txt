@@ -1,0 +1,34 @@
+certificatesigningrequests.certificates.k8s.io
+
+
+
+kubectl get objet objet-name -o yaml > ogjetname.yaml: Pour obtenir un objet en format yaml
+
+cat ogjetname.yaml
+
+
+vi name-csr.yml
+
+
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: csr-creator
+spec:
+  groups:
+  - system:authenticated
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  request: (Coller le .csr en base64 ici)
+
+
+
+kubectl apply -f name.csr.yml
+
+
+kubectl certificate approve agent-smith: Appouver le certificat agent-smith
+kubectl certificate deny agent-smith: Refuser le certificat agent-smith
+
+cat server.csr | base64 | tr -d '\n' : Recuperer le .csr en base64 
