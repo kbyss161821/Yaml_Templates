@@ -1,0 +1,13 @@
+
+
+kubectl get clusterroles --no-headers | wc -l or kubectl get clusterroles --no-headers -o json | jq '.items | length'
+
+
+
+
+kubectl get ClusterRoleBindings --no-headers | wc -l
+
+
+* Les clusterrole appartiennent à tous les namespaces
+
+
