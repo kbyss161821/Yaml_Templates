@@ -31,8 +31,9 @@ roleRef:
   name: storage-admin
   apiGroup: rbac.authorization.k8s.io
   
-  
-  
+ 
+ 
+ kubectl create serviceaccount ingress-serviceaccount --namespace ingress-space
   
 
 RESUME

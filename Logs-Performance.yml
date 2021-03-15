@@ -1,0 +1,9 @@
+
+
+kubectl top node: Voir les performances des NODES
+
+
+kubectl top pod: Voir les performances des POD
+
+
+kubectl logs podname container name: Voir les logs d'un pod

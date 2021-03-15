@@ -1,0 +1,47 @@
+
+ip link: Voir les interfaces reseaux pour le master
+
+arp node01: Voir les interfaces reseaux
+
+
+ip addr show weave: Voir l'ip reseau weave
+
+
+
+ip route show default: Voir le chemin du packet
+
+netstat -nplt: Voir tous les ports d'ecoutes
+netstat -anp | grep etcd
+
+
+ps -aux | grep kubelet: Voir le pluggin network configuré
+
+ps -aux | grep kubelet and look for --cni-bin-dir to see the path configured with all binaries of CNI
+
+
+ls /opt/cni/bin: Voir la list des pluggins du CNI
+
+ls /etc/cni/net.d/: Voir le pluggins Configuré
+
+
+
+Cat /etc/cni/net.d/plugginConfiguré: Get binary executable file by kubelet after a container and its associated namespace are created
+
+
+
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
+
+kubectl logs kube-proxy-rw54b -n kube-system: See the type of proxy 
+
+kubectl -n kube-system describe deployments.apps coredns | grep -A2 Args | grep Corefile: Get CoreDNS service configuration file location
+
+
+kubectl exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
+
+
+
+kubectl get ingress --all-namespaces: Voir les ressources Ingress
+
+
+kubectl describe ingress --namespace app-space: Voir les details du Ingress
