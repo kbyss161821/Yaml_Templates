@@ -1,0 +1,192 @@
+Step by Step Deployment of Bacula Backup Server on Ubuntu 15.04
+
+Website of Bacula Server:
+
+blog.bacula.org
+
+The Steps are as follows:
+
+Step 1: Login to Root
+#su -
+type the Password
+
+Step 2: Update the System
+#apt-get update
+
+Step 3: Deply MySQL Server
+#apt-get install mysql-server
+
+During Installation you would be prompted for Database Password
+Type the password of your choice
+
+Step 4: Install Bacula-Server and Bacula-Client
+
+#sudo apt-get install bacula-server bacula-client
+
+During Installation, you would be asked to configure Postfix
+
+1. Press Ok on Screen 1
+
+2. Select "Internet Site" on Screen 2 and Click Ok
+
+3. Enter Server Fully Qualified Name (FDQN)
+Type the Name of your Choice: eg. Ubuntu and click OK
+
+4. Now Select "Yes" to Configure Database for Bacula with 
+dbconfig-common
+Click "Yes" and Press Enter
+
+5. Enter Mysql Database Password:
+
+Enter the same password which you have entered in mysql installation
+
+6. Now Set the Password for Bacula-Director-Mysql to Register with Database Server
+Type any Password:
+
+Now Bacula is Deployed Sucessfully
+
+Part-B Creating Backup and Restore Directories
+
+Step 1: Create Directories
+#sudo mkdir -p /mybackup/backup /mybackup/restore
+
+Step 2: Set Permissions and Ownerships to Directories
+#sudo chown -R bacula:bacula /mybackup/
+#sudo chmod -R 700 /mybackup/
+
+Part-C Configure Bacula
+
+Step 1: Update Bacula Director Configuration
+
+#sudo vi /etc/bacula/bacula-dir.conf
+
+Find the following Section:
+[...]
+Job {
+  Name = "RestoreFiles"
+  Type = Restore
+  Client=server-fd
+  FileSet="Full Set"
+  Storage = File
+  Pool = Default
+  Messages = Standard
+  Where = /mybackup/restore
+}
+[...]
+Change the where
+
+Scroll Down to "List of Files to be backed up"
+
+Locate the following:
+
+[...]
+#  By default this is defined to point to the Bacula binary
+#    directory to give a reasonable FileSet to backup to
+#    disk storage during initial testing.
+#
+    File = /home/anand
+  }
+[...]
+
+Change the File to /home/anand
+
+Scroll Down to Exclude Section
+
+Locate the following Section:
+
+[...]
+# If you backup the root directory, the following two excluded
+#   files can be useful
+#
+  Exclude {
+    File = /var/lib/bacula
+    File = /nonexistant/path/to/file/archive/dir
+    File = /proc
+    File = /tmp
+    File = /.journal
+    File = /.fsck
+    File = /mybackup
+  }
+}
+[...]
+
+Change the file in last to /mybackup
+
+Save the file and exit
+
+Step 2: Update Bacula Storage Daemon Settings:
+
+#sudo vi /etc/bacula/bacula-sd.conf
+
+Locate the following section
+
+[...]
+Device {
+  Name = FileStorage
+  Media Type = File
+  Archive Device = /mybackup/backup
+  LabelMedia = yes;                   # lets Bacula label unlabeled media
+  Random Access = Yes;
+  AutomaticMount = yes;               # when device opened, read it
+  RemovableMedia = no;
+  AlwaysOpen = no;
+}
+[...]
+
+Change the Location of Archive Device
+
+Exit
+
+Step 3: Now check all the configurations by following command
+
+#sudo bacula-dir -tc /etc/bacula/bacula-dir.conf
+
+#sudo bacula-sd -tc /etc/bacula/bacula-sd.conf
+
+
+Step 4: Restart All Bacula Services
+
+#sudo systemctl restart bacula-director
+#sudo systemctl restart bacula-fd
+#sudo systemctl restart bacula-sd
+
+Now Bacula is Configured
+
+Part-D Managing Bacula Using Webmin
+
+Step 1: Addition of Webmin Repository
+
+#sudo vi /etc/apt/sources.list
+
+Add the following Lines in End
+deb http://download.webmin.com/download/r... sarge contrib
+deb http://webmin.mirror.somersettechsolu... sarge contrib
+
+Exit
+
+Step 2: Add the GPG Key:
+
+#sudo wget http://www.webmin.com/jcameron-key.asc
+
+#sudo apt-key add jcameron-key.asc
+
+#sudo apt-get update
+
+Step-3 Install Webmin
+
+#apt-get install webmin
+
+Step-4 Allow Port-10000 via Firewall to open console
+#sudo ufw allow 10000
+
+Ipaddress: #ifconfig
+
+Step 5: Open Web Browswer
+http://ip-address:10000
+
+Managing Bacula
+
+Go to System Tab on Left and click on Module Configuration Link
+Select Mysql and enter the password and click Save
+
+Enjoy Bacula Backup Server

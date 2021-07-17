@@ -47,7 +47,13 @@ https://mk57blog.wordpress.com/2017/01/28/comment-modifier-la-version-par-defaut
 *************************************************************************************************
 			Linux String Substitute:
 
-sed -i -e "s/chaines1/chaine2/g" fichier  : Remplacer un mot par un autre.
+sed -i -e "s/and/their/g" /home/BSD.txt > /home/BSD_REPLACE.txt : Remplacer un mot par un autre en place.
+
+sed "s/and/their/g" /home/BSD.txt > /home/BSD_REPLACE.txt: Remplacer dans un autre fichier
+
+$ sed -i '/copyright/d' /home/BSD.txt > /home/BSD_DELETE.txt : Supprimer une ligne dans un fichier
+
+https://kifarunix.com/delete-lines-matching-a-specific-pattern-in-a-file-using-sed/
 *************************************************************************************
    "#nmap -PM ip@" : Scanner les ports disponiblent dans mon réseau 
     ***************************************************************************************
@@ -99,14 +105,14 @@ vi /etc/exports
 exportfs -rv : Valider les modifications
 
 
-mount -t nfs 172.16.238.15:/nfsshare /var/www/web/ : Sur le serveur client
+mount -t nfs 172.16.238.15:/app /var/www/html  : Sur le serveur client
 mount -l : Verifier le montage
 
 
 
  
  *********************************************************************************************** 
- https://tecadmin.net/crontab-in-linux-with-20-examples-of-cron-schedule/
+*/5 * * * * echo hello > /tmp/cron_text
  
  # yum install cronie : installation de cronie
  # crontab -l : Verifier les crons
@@ -155,6 +161,9 @@ sudo service httpd reload
 /etc/named.conf
 
 https://linux-note.com/centos-7-serveur-dns-local/
+
+nslookup google.com: Voir mon serveur DNS par defaut
+
 *****************************************************************************************
 "useradd -e 2016-11-30 test01" : Creer un user avec un compte expirant
 
@@ -753,7 +762,8 @@ https://app.slack.com/client/TM1K9GEB0/C0195T27TE3/details/top
 *********************************************************************************************
 
 				GIT MANIPULATION
-
+git config --global user.name "maxariel"
+git config --global user.email "maxariel@example.com"
 git init
 git add README.md
 git commit -m "first commit"
@@ -844,34 +854,6 @@ https://console.aws.amazon.com/billing/home?#/paymentmethods
 
 https://labs.vocareum.com/main/main.php?m=editor&nav=1&asnid=14334&stepid=14335
 **********************************************************************************************
-
-
-ssh natasha@172.16.238.15  PW: Bl@kW
-ssh peter@172.16.239.10
-scp /home/thor/ natasha@172.16.238.15:/data
-
-scp -r /home/thor/blog/ natasha@172.16.238.15:/data
-
-ssh tony@172.16.238.10     PW: Ir0nM@n
-ssh steve@172.16.238.11     PW: Am3ric@
-ssh banner@172.16.238.12     PW: BigGr33n
-ssh clint@172.16.238.16	PW : H@wk3y3
-ssh peter@172.16.239.10	PW: Sp!dy
-ssh clint@172.16.238.16 	PW: H@wk3y3	
-ssh loki@172.16.238.14        PW: Mischi3fs
-
-
-
-
-ssh-keygen -t rsa
-ssh-copy-id tony@172.16.238.10
-ssh-copy-id steve@172.16.238.11
-ssh-copy-id banner@172.16.238.12
-ssh-copy-id peter@172.16.239.10
- 	
-telnet 172.16.238.10 80	PW: H@wk3y3
-
-*********************************************************************************
 https://www.composerize.com/
 
 
@@ -914,7 +896,9 @@ https://trainingportal.linuxfoundation.org/orders?cart=%5B%7B%22purchasableId%22
 
 Coupon: SCOFFER15
 
+Password Cours: G8lU1oZBt7kzfq5JzzE9
 
+$1YyjM7vw6
 
      AWS Certification
 https://aws.psiexams.com/#/scheduling/payment;eligibilityCode=TYURCKH6;bookingCode=Z9KXZDWL;from=schedule;isReschedule=false
@@ -922,10 +906,110 @@ https://aws.psiexams.com/#/scheduling/payment;eligibilityCode=TYURCKH6;bookingCo
 
 *************************************************************************
 
-https://kodekloud.com/purchase?product_id=2021256&coupon_code=UDEMYSTUDENT151112
-************************************************************************************
+
+https://www.footlive.me/
+
+http://livetv.sx/frx/
+
+https://kodekloud.com/courses/675080/lectures/12038864
+
+
+******************************************************************
+Hello sir,
+I am Sidoine KRA Systems Administrator and DevOps Engineer.
+I am indeed looking for a job and even a freelance.
+I remain available for any interview at the email: "sidoinekra@gmail.com"
+
+Cordially.
+
+
+
+https://learndigital.withgoogle.com/ateliersnumeriques/register/verification
+
+
+
+https://kodekloud.com/?flash=checkout.already_purchased_error
+************************************************************************
+		METRIC SERVER FOR PERFORMANCE MONITORING
+
+https://github.com/kodekloudhub/kubernetes-metrics-server.git
+
+
+
+https://www.ictjob.be/en/job/mutualite-chretienne-devsecops-system-engineer/3-138515
+
+
+CKA
+https://drive.google.com/drive/folders/1LqSDHXNe3SEcqUHZTB3eqwAeGfK42La9?usp=sharing
+Labs
+https://bit.ly/3axQkYB
+
+
+CKAD
+https://drive.google.com/drive/folders/1gm0hQ6OcGh--tCHKam-mP3JUrLZePQ6S?usp=sharing
+Labs
+https://bit.ly/3avi8wX
+**********************************************************************
+# Devenir devops CI/CD : http://bit.ly/3a1YsOZ
+# Amazon Web Services : https://bit.ly/3c5gzUI
+# Docker : http://bit.ly/2Zu4F4X
+# Kubernetes : http://bit.ly/34jGoNV
+# LXD : http://bit.ly/39x0XJe
+# Ansible : http://bit.ly/35iHJDz
+# Jenkins : http://bit.ly/2Pv7GNH
+# Consul : http://bit.ly/2ZFEebH 
+Docker : http://bit.ly/2QRhXU9
+Tips linux : http://bit.ly/2QMm9Er
+Git : http://bit.ly/2QJ1ml1
+Ansible : http://bit.ly/2QHzyh4
+Compose : http://bit.ly/2QMh3Ih
+TCPDump : http://bit.ly/2SbM8G0
+Scripting : http://bit.ly/2G6SUGT
+GitLab : http://bit.ly/2FMTx9b
+IPTables : http://bit.ly/2TcWZwE
+
+Forum : https://discord.gg/bNbU9UV
+
+https://www.youtube.com/watch?v=SRD2h5Fh4fA : ansible reboot module
+
+************************************************************************
+https://learn.sandipdas.in/2021/05/17/jenkins-practical-beginners-course-for-devops-learn-devops-tools-ep1/
 
 
 
 
+https://kodekloud.com//courses/ansible-for-the-absolute-beginners/lectures/12199991
 
+
+
+https://beta.kodekloud.com/dashboard/
+
+
+***************************************************************************
+
+ssh natasha@172.16.238.15  PW: Bl@kW
+ssh peter@172.16.239.10
+scp /home/thor/ natasha@172.16.238.15:/data
+
+scp -r /home/thor/blog/ natasha@172.16.238.15:/data
+
+ssh tony@172.16.238.10     PW: Ir0nM@n
+ssh steve@172.16.238.11     PW: Am3ric@
+ssh banner@172.16.238.12     PW: BigGr33n
+ssh clint@172.16.238.16	PW : H@wk3y3
+ssh peter@172.16.239.10	PW: Sp!dy
+ssh clint@172.16.238.16 	PW: H@wk3y3	
+ssh loki@172.16.238.14        PW: Mischi3fs
+
+
+
+
+ssh-keygen -t rsa
+ssh-copy-id tony@172.16.238.10
+ssh-copy-id steve@172.16.238.11
+ssh-copy-id banner@172.16.238.12
+ssh-copy-id peter@172.16.239.10
+ 	
+telnet 172.16.238.10 80	PW: H@wk3y3
+
+******************************************************************************
