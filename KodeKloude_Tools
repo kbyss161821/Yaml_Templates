@@ -508,6 +508,7 @@ Password: VM5SI64AXC
 
 ******************************************************************************************************
 				INSTALLATION DE DOCKER
+				Debian base Linux
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
@@ -527,6 +528,10 @@ https://devopssec.fr/article/deployer-manipuler-securiser-un-serveur-registry-do
 
 
 https://devopssec.fr/article/gerer-manipuler-pods-kubernetes
+
+				Red Hat base Linux
+	yum install -y yum-utils device-mapper-persistent-data lvm2
+
 *******************************************************************************************************
 			CISCO ANNYCONNECT
 https://vpn.nic.in/
