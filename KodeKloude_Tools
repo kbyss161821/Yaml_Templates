@@ -531,6 +531,9 @@ https://devopssec.fr/article/gerer-manipuler-pods-kubernetes
 
 				Red Hat base Linux
 	yum install -y yum-utils device-mapper-persistent-data lvm2
+	
+	
+	sudo usemod -a -G docker username
 
 *******************************************************************************************************
 			CISCO ANNYCONNECT
