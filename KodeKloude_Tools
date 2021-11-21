@@ -1,3 +1,10 @@
+		Mettre l'interface reseau Windows à jours
+
+ipconfig /release
+ipconfig /renew
+
+**************************************************************
+
 "sudo cat /etc/os-release" : Voir la version du SE
 ********************************************************
 "ssh username@ip" : connexion par ssh
