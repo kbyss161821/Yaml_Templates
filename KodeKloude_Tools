@@ -3,7 +3,7 @@
 ipconfig /release
 ipconfig /renew
 
-gpupdate /force
+gpupdate /force : Appliquer une GPO forcé
 
 **************************************************************
 
