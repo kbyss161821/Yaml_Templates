@@ -3,6 +3,8 @@
 ipconfig /release
 ipconfig /renew
 
+gpupdate /force
+
 **************************************************************
 
 "sudo cat /etc/os-release" : Voir la version du SE
