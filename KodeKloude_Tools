@@ -546,6 +546,11 @@ https://devopssec.fr/article/gerer-manipuler-pods-kubernetes
 	
 	
 	sudo usemod -a -G docker username
+********************************************************************************************************
+DOCKER-MACHINE
+
+https://github.com/docker/machine/releases
+
 
 *******************************************************************************************************
 			CISCO ANNYCONNECT
