@@ -296,9 +296,14 @@ sudo service httpd restart
 
 
 **************************************************************************************************************
- 					Configuration 
+ 					Configuration NAGIOS
  
  https://library.nagios.com/training/selfpaced/topics/#tab-nagiosxi
+ 
+ https://library.nagios.com/training/selfpaced/topics/#tab-nagiosxi
+ 
+ https://linuxhostsupport.com/blog/how-to-install-nagios-core-on-centos-7/
+ 
  ************************************************************************************************************
 				Configuration de l'interface graphique
 https://quick-tutoriel.com/installer-une-interface-graphique-sur-centos/
