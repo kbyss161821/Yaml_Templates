@@ -1,4 +1,10 @@
-		Mettre l'interface reseau Windows à jours
+*****************************************************************************
+	GITHUB DES FORMATION
+	
+	https://github.com/yeelloo/Go-Books
+
+************************************************************************
+Mettre l'interface reseau Windows à jours
 
 ipconfig /release
 ipconfig /renew
