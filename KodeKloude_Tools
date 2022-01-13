@@ -121,6 +121,13 @@ mount -l : Verifier le montage
 
  
  *********************************************************************************************** 
+ VMWARE SPHERE (VSPHERE) Cours
+ 
+ https://www.youtube.com/watch?v=rXtRB1FdS0A&list=PLgfd8XL0dJ23CTnxMAAUFLIKSX-3jAT3t&index=15
+ 
+ 
+ 
+ *****************************************************************************************************
 */5 * * * * echo hello > /tmp/cron_text
  
  # yum install cronie : installation de cronie
