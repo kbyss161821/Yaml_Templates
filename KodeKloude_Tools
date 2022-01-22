@@ -442,6 +442,25 @@ https://www.postgresql.org/docs/9.1/auth-pg-hba-conf.html
 			CONFIGURATION DE SFTP
 			
 sftp username@ip : Se conncter en SFTP
+sudo -i
+useradd anita
+passwd anita
+make share directory:
+mkdir -p /var/www/opt
+Make the following changes to /etc/ssh/sshd_config:
+#subsystem sftp /usr/libexec/openssh/sftp-server
+Subsystem sftp internal-sftp
+Match User anita
+ForceCommand internal-sftp
+PasswordAuthentication yes
+ChrootDirectory /var/www/opt
+PermitTunnel no
+AllowTcpForwarding no
+X11Forwarding no
+AllowAgentForwarding no
+Then restart the sshd service:
+systemctl restart sshd
+systemctl status sshd
 systemctl restart sshd : Redemarrer le service SSh
 
 			
