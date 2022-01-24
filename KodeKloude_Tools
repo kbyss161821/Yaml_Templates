@@ -463,7 +463,7 @@ systemctl restart sshd
 systemctl status sshd
 systemctl restart sshd : Redemarrer le service SSh
 
-			
+https://www.thegeekstuff.com/2012/03/chroot-sftp-setup/			
 https://medium.com/@kbellioum/configuration-du-serveur-sftp-sur-centos-7-108911a78a6b
 			
 *************************************************************************************************
