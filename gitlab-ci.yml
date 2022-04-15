@@ -1,0 +1,220 @@
+stages:
+  - lint
+  - test
+  - qa
+  - build
+  - security
+  - deploy_dev
+  - deploy_staging
+  - deploy_prod
+
+
+variables:
+  # java
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  #AWS
+  REPOSITORY: "565521853492.dkr.ecr.eu-west-3.amazonaws.com"
+  IMAGE_NAME: "edf-industria-orchestrator"
+  REPOSITORY_URL: "$REPOSITORY/$IMAGE_NAME"
+  IMAGE_TAG: $CI_COMMIT_SHA
+cache:
+  paths:
+    - .m2/repository
+
+# once merge request is created
+conventional-commits-linting:
+  stage: lint
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/rust
+  variables:
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required for history
+  before_script:
+    - wget -q -O tmp.zip "https://gitlab.com/DeveloperC/conventional_commits_linter/-/jobs/artifacts/0.9.0/download?job=release-binary-compiling-x86_64-linux-musl" && unzip tmp.zip && rm tmp.zip
+  script:
+    # Lint all the commits in the branch.
+    - ./conventional_commits_linter --from-reference "origin/$CI_DEFAULT_BRANCH" --allow-angular-type-only
+  allow_failure: true
+
+sonar:
+  stage: qa
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/maven:3.8.4-openjdk-17
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - mvn clean compile
+    - mvn clean verify
+    - mvn sonar:sonar -Dsonar.qualitygate.wait=true
+  allow_failure: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+test:
+  stage: test
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/maven:3.8.4-openjdk-17
+  script:
+    - 'mvn $MAVEN_CLI_OPTS verify'
+  artifacts:
+    paths:
+      - target/*.jar
+
+
+docker:build:
+  extends: .docker
+  variables:
+    COMMIT: ${CI_COMMIT_SHORT_SHA}
+    RELEASE: latest
+  script:
+    - echo "Building image..."
+    - docker build -t $REPOSITORY_URL:$RELEASE .
+    - echo "Tagging image..."
+    - docker tag $REPOSITORY_URL:$RELEASE $REPOSITORY_URL:$COMMIT
+    - echo "Pushing image..."
+    - docker push $REPOSITORY_URL:$RELEASE
+    - docker push $REPOSITORY_URL:$COMMIT
+  rules:
+     - if: $CI_COMMIT_TAG == null
+#    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+
+docker:build:tag:
+  extends: .docker
+  variables:
+    # ECR
+    COMMIT: ${CI_COMMIT_SHORT_SHA}
+    RELEASE: ${CI_COMMIT_TAG}
+  script:
+    # retrieve images layers
+    - docker pull $REPOSITORY_URL:${COMMIT}
+    # add tag with desired release name
+    - docker tag $REPOSITORY_URL:${COMMIT} $REPOSITORY_URL:${RELEASE}
+    # push to registry
+    - docker push $REPOSITORY_URL:${RELEASE}
+  # only tag
+  rules:
+    # TODO : ony allow format X.X.X
+    # if: '$CI_COMMIT_TAG =~ /^\d+.\d+.\d+/'
+    - if: $CI_COMMIT_TAG != null
+      when: manual
+
+#template
+.docker:
+  stage: build
+  image:
+    name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:stable
+  services:
+    - docker:dind
+  variables:
+    # Needed to fix bug in gitlab ci with docker in docker
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - apk add --no-cache curl jq python3 py-pip
+    - pip install awscli
+    - echo Logging in to Amazon ECR...
+    - docker --version
+    - aws --version
+    - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY
+
+container_scanning:
+  stage: security
+  image:
+    name: docker.io/aquasec/trivy:latest
+    entrypoint: [""]
+  variables:
+    # No need to clone the repo, we exclusively work on artifacts.  See
+    # https://docs.gitlab.com/ee/ci/runners/README.html#git-strategy
+    GIT_STRATEGY: none
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - trivy --version
+    # cache cleanup is needed when scanning images with the same tags, it does not remove the database
+    - time trivy image --clear-cache
+    # update vulnerabilities db
+    - time trivy --download-db-only --no-progress --cache-dir .trivycache/
+    # Prints full report
+    - time trivy --exit-code 0 --cache-dir .trivycache/ --no-progress "$REPOSITORY_URL:$IMAGE_TAG"
+    # Fail on critical vulnerabilities
+    - time trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --no-progress "$REPOSITORY_URL:$IMAGE_TAG"
+  cache:
+    paths:
+      - .trivycache/
+  allow_failure: true
+
+
+# deploy latest
+deploy:dev:
+  extends: .deploy
+  stage: deploy_dev
+  environment:
+    name: dev
+  # only main
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# deploy latest
+deploy:staging:
+  extends: .deploy
+  stage: deploy_staging
+  environment:
+    name: staging
+  variables:
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}
+  # only main and last commit
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_TAG == null
+      when: manual
+
+# deploy tag only
+deploy:staging:tag:
+  extends: .deploy
+  stage: deploy_staging
+  environment:
+    name: staging
+  variables:
+    IMAGE_TAG: ${CI_COMMIT_TAG}
+  # only main or tag
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG != null
+      when: manual
+
+# deploy tag only
+deploy:prod:
+  extends: .deploy
+  stage: deploy_prod
+  environment:
+    name: prod
+  variables:
+    IMAGE_TAG: ${CI_COMMIT_TAG}
+  # only tags
+  rules:
+    # TODO : ony allow format X.X.X
+    # if: '$CI_COMMIT_TAG =~ /^\d+.\d+.\d+/'
+    - if: $CI_COMMIT_TAG != null
+      when: manual
+
+# template
+.deploy:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-ecs:latest
+  variables:
+    IMAGE_TAG: latest
+    # No need to clone the repo, we exclusively work on artifacts
+    GIT_STRATEGY: none
+  script:
+    - echo "Retrive container definition..."
+    - TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition $CI_AWS_ECS_TASK_DEFINITION --region $AWS_REGION)
+    - echo "Current image..."
+    - echo $TASK_DEFINITION | jq '.taskDefinition.containerDefinitions[0].image'
+    - echo "Registering new container definition..."
+    # fargate ecs need to remove definition keys when copying definition
+    - NEW_TASK_DEFINITION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$REPOSITORY_URL:$IMAGE_TAG" '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')
+    - NEW_TASK_DEFINITION=$(echo $NEW_TASK_DEFINITION | jq 'del(.registeredBy) | del(.registeredAt)')
+    - NEW_TASK_INFO=$(aws ecs register-task-definition --region "$AWS_REGION" --cli-input-json "$NEW_TASK_DEFINITION")
+    - NEW_REVISION=$(echo $NEW_TASK_INFO | jq '.taskDefinition.revision')
+    - echo "Revision $NEW_REVISION"
+    - echo "Updating the service..."
+    - aws ecs update-service --region $AWS_REGION --cluster $CI_AWS_ECS_CLUSTER --service $CI_AWS_ECS_SERVICE --task-definition $CI_AWS_ECS_TASK_DEFINITION:$NEW_REVISION
